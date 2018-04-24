@@ -151,13 +151,13 @@ public class FirstController : MonoBehaviour, ISceneController, IUserInterface
 		}
 		if (Input.GetButtonDown ("Fire1")) {
 			Debug.Log ("Fire1 Pressed");
-			Vector3 mp = Input.mousePosition;
-			Camera ca = cam.GetComponent<Camera> ();
-			Ray ray = ca.ScreenPointToRay (Input.mousePosition);
+			Vector3 mouse = Input.mousePosition;
+			Camera camer = cam.GetComponent<Camera> ();
+			Ray ray = camer.ScreenPointToRay (Input.mousePosition);
 
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit)) {
-				if (hit.collider.gameObject.tag.Contains ("Disk") && isPaused == false) {
+			RaycastHit hits;
+			if (Physics.Raycast (ray, out hits)) {
+				if (hits.collider.gameObject.tag.Contains ("Disk") && isPaused == false) {
 					this.addScoreByRound ();
 
 					hit.collider.gameObject.GetComponent<Rigidbody> ().isKinematic = false;
@@ -165,17 +165,17 @@ public class FirstController : MonoBehaviour, ISceneController, IUserInterface
 					Vector3 explosionPos = hit.collider.gameObject.transform.position;
 					Collider[] colliders = Physics.OverlapSphere (explosionPos, radius);
 					foreach (Collider chit in colliders) {
-						Rigidbody t_rigid = chit.gameObject.GetComponent<Rigidbody> ();
-						if (t_rigid != null) {
-							t_rigid.AddExplosionForce (600, explosionPos, radius);
+						Rigidbody Rig = chit.gameObject.GetComponent<Rigidbody> ();
+						if (Rig != null) {
+							Rig.AddExplosionForce (600, explosionPos, radius);
 						}
 					}
 
-					DiskData tmpDiskData = hit.collider.GetComponent<DiskData> ();
+					DiskData tmp = hit.collider.GetComponent<DiskData> ();
 
 					currentDiskFactory.Free (tmpDiskData.indexInUsed);
-					tmpDiskData.currentSSAction.enable = false;
-					tmpDiskData.currentSSAction.destory = true;
+					tmp.currentSSAction.enable = false;
+					tmp.currentSSAction.destory = true;
 
 
 				}
