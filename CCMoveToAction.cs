@@ -46,7 +46,7 @@ public class CCMoveToAction : SSAction
 	public static CCMoveToAction GetSSAction (float _speed)
 	{
 		CCMoveToAction act = ScriptableObject.CreateInstance<CCMoveToAction> ();
-		act._speed = act.shotSpeed = _speed;
+		act.speed = act.shotSpeed = _speed;
 		return act;
 	}
 
